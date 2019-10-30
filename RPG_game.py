@@ -8,7 +8,7 @@ import random
 
 class Monster:
     def __init__(self):
-        self.agility = random.randrange(2, 6)
+        self.agility = random.randrange(0, 3)  # Increased chance to dodge 0%  - 30%
         self.attack = random.randrange(3, 6)
         self.health = random.randrange(8, 11)
 
@@ -21,11 +21,11 @@ class Player:
     def __init__(self, role):
         self.role = role
         if self.role == "knight":
-            self.agility = 3
+            self.agility = 1  # Increase chance to dodge + 10%
             self.attack = 5
             self.health = 10
         elif self.role == "rogue":
-            self.agility = 5
+            self.agility = 3  # Increase chance to dodge + 30%
             self.attack = 3
             self.health = 6
 
@@ -57,18 +57,18 @@ def main():
             print()
             # Player Move
             if move.upper() == "A":
-                monster_dodge = random.randrange(0, 4) + monster.agility
+                monster_dodge = random.randrange(0, 11) + monster.agility
                 if monster_dodge <= 8:
-                    print("You attack the monster with", player.attack, "damage!")
+                    print("You attacked the monster with", player.attack, "damage!")
                     monster.health -= player.attack
                 else:
                     print("The monster dodged your attack!")
             elif move.upper() == "B":
                 print("You decided to do None!")
             # Monster Move
-            player_dodge = random.randrange(0, 7) + player.agility
+            player_dodge = random.randrange(0, 11) + player.agility
             print(player_dodge)
-            if player_dodge <= 8:
+            if player_dodge <= 10:
                 print("The monster attacks you with", monster.attack, "damage!")
                 player.health -= Monster.attack(monster)
             else:
