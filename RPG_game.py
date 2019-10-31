@@ -8,7 +8,7 @@ import random
 
 class Monster:
     def __init__(self):
-        self.agility = random.randrange(0, 3)  # Increased chance to dodge 0%  - 30%
+        self.agility = random.randrange(0, 2)  # Increased chance to dodge 0%  - 30%
         self.attack = random.randrange(3, 6)
         self.health = random.randrange(8, 11)
 
@@ -28,10 +28,6 @@ class Player:
             self.agility = 3  # Increase chance to dodge + 30%
             self.attack = 3
             self.health = 6
-
-    def attack(self):
-        if self.role == "knight":
-            pass
 
 
 def main():
@@ -53,26 +49,33 @@ def main():
             print("Monster Health:", monster.health)
             print("Player Health:", player.health)
             print()
-            move = input("A: Attack\n\rB: None\n\r")
+            move = input("A: Attack\n\rB: Block\n\r")
             print()
             # Player Move
+            player.block = False
             if move.upper() == "A":
                 monster_dodge = random.randrange(0, 11) + monster.agility
-                if monster_dodge <= 8:
+                if monster_dodge <= 10:
                     print("You attacked the monster with", player.attack, "damage!")
                     monster.health -= player.attack
                 else:
                     print("The monster dodged your attack!")
             elif move.upper() == "B":
-                print("You decided to do None!")
+                player.block = True
             # Monster Move
+            monster.block = False
             player_dodge = random.randrange(0, 11) + player.agility
-            print(player_dodge)
-            if player_dodge <= 10:
-                print("The monster attacks you with", monster.attack, "damage!")
-                player.health -= Monster.attack(monster)
+            if random.randrange(0, 2) == 0:
+                if player.block is False:
+                    if player_dodge <= 10:
+                        print("The monster attacks you with", monster.attack, "damage!")
+                        player.health -= Monster.attack(monster)
+                    else:
+                        print("You dodged the monsters attack!")
+                else:
+                    print("You blocked the monsters attack!")
             else:
-                print("You dodged the monsters attack!")
+                monster.block = True
 
         elif monster.health < 1:
             print("You killed the monster!")
