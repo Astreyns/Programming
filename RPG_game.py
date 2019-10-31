@@ -1,8 +1,7 @@
 # make a game where you fight people and you have stats
 # Agility 1 = 10% dodge chance
 # Make game attack monster
-# TODO: Rethink attack mechanic, Rethink & test for average dodge stats also?
-# TODO: Add in another move - block
+# TODO: Rethink attack mechanic
 import random
 
 
@@ -62,6 +61,9 @@ def main():
                     print("The monster dodged your attack!")
             elif move.upper() == "B":
                 player.block = True
+            else:
+                print("Please pick one of the options")
+                continue
             # Monster Move
             monster.block = False
             player_dodge = random.randrange(0, 11) + player.agility
